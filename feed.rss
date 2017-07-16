@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
-<channel><title>My fancy blog</title><link>http://example.com/blog/index.html</link>
-<description>A blog about turtles and carrots</description><language>en</language>
-<lastBuildDate>Sun, 16 Jul 2017 13:20:39 +0200</lastBuildDate>
-<pubDate>Sun, 16 Jul 2017 13:20:39 +0200</pubDate>
-<atom:link href="http://example.com/blog/feed.rss" rel="self" type="application/rss+xml" />
+<channel><title>Linux, Software and play</title><link>gador.github.io/index.html</link>
+<description>A blog about all kinds of things concerning software and Linux</description><language>en</language>
+<lastBuildDate>Sun, 16 Jul 2017 13:24:01 +0200</lastBuildDate>
+<pubDate>Sun, 16 Jul 2017 13:24:01 +0200</pubDate>
+<atom:link href="gador.github.io/feed.rss" rel="self" type="application/rss+xml" />
 <item><title>
 Contact - How to contact me
 </title><description><![CDATA[
@@ -77,9 +77,10 @@ jyBuokrnrzT121ArBWXazEdVuci815+JwLlA3JNpiMD2UZm/mu3TNcnmttfuLQzo
 <p>Florian</p>
 
 <p>Tags: <a href='tag_contact.html'>contact</a>, <a href='tag_email.html'>email</a>, <a href='tag_about.html'>about</a></p>
+
 <!-- text end -->
-]]></description><link>http://example.com/blog/contact---how-to-contact-me.html</link>
-<guid>http://example.com/blog/./contact---how-to-contact-me.html</guid>
+]]></description><link>gador.github.io/contact---how-to-contact-me.html</link>
+<guid>gador.github.io/./contact---how-to-contact-me.html</guid>
 <dc:creator>Florian Brandes</dc:creator>
-<pubDate>Sun, 16 Jul 2017 13:17:08 +0200</pubDate></item>
+<pubDate>Sun, 16 Jul 2017 13:08:00 +0200</pubDate></item>
 </channel></rss>
