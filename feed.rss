@@ -2,9 +2,103 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel><title>Linux, Software and play</title><link>https://gador.github.io/index.html</link>
 <description>A blog about all kinds of things concerning software and Linux</description><language>en</language>
-<lastBuildDate>Sun, 16 Jul 2017 13:31:27 +0200</lastBuildDate>
-<pubDate>Sun, 16 Jul 2017 13:31:27 +0200</pubDate>
+<lastBuildDate>Sun, 16 Jul 2017 13:54:39 +0200</lastBuildDate>
+<pubDate>Sun, 16 Jul 2017 13:54:39 +0200</pubDate>
 <atom:link href="https://gador.github.io/feed.rss" rel="self" type="application/rss+xml" />
+<item><title>
+How I backup in Qubes 3.2 
+</title><description><![CDATA[
+
+<h2>The scenario</h2>
+
+<p>So I want to backup my AppVms in Qubes. Obviously it makes sense, to encrypt the resulting
+backup file. Not just so a third party will hae problems decoding my private digital life
+but also to ensure integraty. See also <a href="https://www.qubes-os.org/doc/backup-restore/">here</a></p>
+
+<p>The catch: You should use a high entropy passphrase. But entering that on a regular basis 
+didn't seem like it would work for me.</p>
+
+<h2>The setup</h2>
+
+<p>I use an external 1 TB HDD attached via usb. The HDD is attached as a block device to a special
+<em>"backup"</em> AppVM. <em>backup</em> is obviously not connected to a NetVM and there is nothing special 
+in it. </p>
+
+<h2>How I use the backup Manager</h2>
+
+<p>First, I use the Qubes VM Manager to attach the external HDD as a block device to the <em>backup</em> VM. </p>
+
+<p>In it I run:</p>
+
+<pre><code>sudo mount /dev/xvdi1 backup/
+</code></pre>
+
+<p>to mount the HDD in the <em>backup</em> folder (which obviously must be created first).</p>
+
+<p>Then, from a dom0 console, I run </p>
+
+<pre><code>qvm-run --pass-io vault-nw 'cat /home/user/.backup_key'
+</code></pre>
+
+<p>So, wait, what? </p>
+
+<pre><code>qvm-run --pass-io
+</code></pre>
+
+<p>is used to copy file(content) between VMs. It can also be used to copy to dom0. </p>
+
+<pre><code>vault-nw
+</code></pre>
+
+<p>is the source VM. In this case, it is my password manager VM.</p>
+
+<pre><code>'cat /home/user/.backup_key'
+</code></pre>
+
+<p>This command is executed in the source VM (so in this example <em>vault-nw</em>). And the output
+is displayed in the dom0 Terminal. Within the vault-nw I exported my laptop backup key to a plain
+text file, called <em>.backup_key</em>. </p>
+
+<p>The content is displayed in dom0 Terminal (which is considered ultimatly trusted) and can be copied through
+a simple right click.</p>
+
+<p>In the Qubes VM Manager I shutdown every VM that I want to save, then go to System->Backup VMs.
+From there I choose all the VMs to backup. Clicking on Next will show the Dialog, where Qubes
+wants to know, where to backup to. Here comes the backup VM handy. Here I choose the <em>backup</em> VM 
+as a target and</p>
+
+<pre><code>/home/user/backup/
+</code></pre>
+
+<p>as the backup folder. (You remember? The external HDD was mounted here within the <em>backup</em> VM)</p>
+
+<p>Next, I copy/paste the backup key to the dialog and click next. The backup starts.</p>
+
+<h2>Pitfalls</h2>
+
+<p>So, the worst case happend and you need to restore your backup. But wait, what was that horrible
+long, high entropy passphrase again? Yeah, right, it is in my password-vault VM. But where is that?
+In my backup....</p>
+
+<p>So you see, that sucks.</p>
+
+<p>You should therefore have your passphrase somewhere seperate than <em>within</em> your backup.</p>
+
+<p>I personally use <a href="https://www.passwordstore.org">pass</a> and setup a git repository on my homeserver to sync
+to. But that is a story for another blog.</p>
+
+<p>If you have questions or remarks, just drop me an email. </p>
+
+<p>Regards,</p>
+
+<p>Florian</p>
+
+<p>Tags: <a href='tag_qubes.html'>qubes</a>, <a href='tag_backup.html'>backup</a>, <a href='tag_howto.html'>howto</a></p>
+<!-- text end -->
+]]></description><link>https://gador.github.io/how-i-backup-in-qubes-32-.html</link>
+<guid>https://gador.github.io/./how-i-backup-in-qubes-32-.html</guid>
+<dc:creator>Florian Brandes</dc:creator>
+<pubDate>Sun, 16 Jul 2017 13:54:37 +0200</pubDate></item>
 <item><title>
 Contact - How to contact me
 </title><description><![CDATA[
