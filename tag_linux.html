@@ -1,13 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
-<channel><title>Linux, Software and play</title><link>https://gador.github.io/index.html</link>
-<description>A blog about all kinds of things concerning software and Linux</description><language>en</language>
-<lastBuildDate>Mon, 17 Jul 2017 11:40:25 +0200</lastBuildDate>
-<pubDate>Mon, 17 Jul 2017 11:40:25 +0200</pubDate>
-<atom:link href="https://gador.github.io/feed.rss" rel="self" type="application/rss+xml" />
-<item><title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Linux, Software and play &mdash; Posts tagged "linux"</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://gador.github.io/index.html">Linux, Software and play</a></h1>
+<div id="description">A blog about all kinds of things concerning software and Linux</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<h3><a class="ablack" href="how-to-manage-passwords-with-pass.html">
 How to manage passwords with pass
-</title><description><![CDATA[
+</a></h3>
+<!-- bashblog_timestamp: #201707171127.11# -->
+<div class="subtitle">July 17, 2017 &mdash; 
+Florian Brandes
+</div>
+<!-- text begin -->
 
 <h1>Background</h1>
 
@@ -322,183 +336,8 @@ change something. But, again, I was lazy and just do <em>pass git pull</em> and 
 
 <p>Tags: <a href='tag_linux.html'>linux</a>, <a href='tag_pass.html'>pass</a>, <a href='tag_security.html'>security</a>, <a href='tag_tomb.html'>tomb</a>, <a href='tag_sync.html'>sync</a>, <a href='tag_howto.html'>howto</a></p>
 <!-- text end -->
-]]></description><link>https://gador.github.io/how-to-manage-passwords-with-pass.html</link>
-<guid>https://gador.github.io/./how-to-manage-passwords-with-pass.html</guid>
-<dc:creator>Florian Brandes</dc:creator>
-<pubDate>Mon, 17 Jul 2017 11:27:11 +0200</pubDate></item>
-<item><title>
-How I backup in Qubes 3.2 
-</title><description><![CDATA[
-
-<h2>The scenario</h2>
-
-<p>So I want to backup my AppVms in Qubes. Obviously it makes sense, to encrypt the resulting
-backup file. Not just so a third party will hae problems decoding my private digital life
-but also to ensure integraty. See also <a href="https://www.qubes-os.org/doc/backup-restore/">here</a></p>
-
-<p>The catch: You should use a high entropy passphrase. But entering that on a regular basis 
-didn't seem like it would work for me.</p>
-
-<h2>The setup</h2>
-
-<p>I use an external 1 TB HDD attached via usb. The HDD is attached as a block device to a special
-<em>"backup"</em> AppVM. <em>backup</em> is obviously not connected to a NetVM and there is nothing special 
-in it. </p>
-
-<h2>How I use the backup Manager</h2>
-
-<p>First, I use the Qubes VM Manager to attach the external HDD as a block device to the <em>backup</em> VM. </p>
-
-<p>In it I run:</p>
-
-<pre><code>sudo mount /dev/xvdi1 backup/
-</code></pre>
-
-<p>to mount the HDD in the <em>backup</em> folder (which obviously must be created first).</p>
-
-<p>Then, from a dom0 console, I run </p>
-
-<pre><code>qvm-run --pass-io vault-nw 'cat /home/user/.backup_key'
-</code></pre>
-
-<p>So, wait, what? </p>
-
-<pre><code>qvm-run --pass-io
-</code></pre>
-
-<p>is used to copy file(content) between VMs. It can also be used to copy to dom0. </p>
-
-<pre><code>vault-nw
-</code></pre>
-
-<p>is the source VM. In this case, it is my password manager VM.</p>
-
-<pre><code>'cat /home/user/.backup_key'
-</code></pre>
-
-<p>This command is executed in the source VM (so in this example <em>vault-nw</em>). And the output
-is displayed in the dom0 Terminal. Within the vault-nw I exported my laptop backup key to a plain
-text file, called <em>.backup_key</em>. </p>
-
-<p>The content is displayed in dom0 Terminal (which is considered ultimatly trusted) and can be copied through
-a simple right click.</p>
-
-<p>In the Qubes VM Manager I shutdown every VM that I want to save, then go to System->Backup VMs.
-From there I choose all the VMs to backup. Clicking on Next will show the Dialog, where Qubes
-wants to know, where to backup to. Here comes the backup VM handy. Here I choose the <em>backup</em> VM 
-as a target and</p>
-
-<pre><code>/home/user/backup/
-</code></pre>
-
-<p>as the backup folder. (You remember? The external HDD was mounted here within the <em>backup</em> VM)</p>
-
-<p>Next, I copy/paste the backup key to the dialog and click next. The backup starts.</p>
-
-<h2>Pitfalls</h2>
-
-<p>So, the worst case happend and you need to restore your backup. But wait, what was that horrible
-long, high entropy passphrase again? Yeah, right, it is in my password-vault VM. But where is that?
-In my backup....</p>
-
-<p>So you see, that sucks.</p>
-
-<p>You should therefore have your passphrase somewhere seperate than <em>within</em> your backup.</p>
-
-<p>I personally use <a href="https://www.passwordstore.org">pass</a> and setup a git repository on my homeserver to sync
-to. But that is a story for another blog.</p>
-
-<p>If you have questions or remarks, just drop me an email. </p>
-
-<p>Regards,</p>
-
-<p>Florian</p>
-
-<p>Tags: <a href='tag_qubes.html'>qubes</a>, <a href='tag_backup.html'>backup</a>, <a href='tag_howto.html'>howto</a></p>
-<!-- text end -->
-]]></description><link>https://gador.github.io/how-i-backup-in-qubes-32-.html</link>
-<guid>https://gador.github.io/./how-i-backup-in-qubes-32-.html</guid>
-<dc:creator>Florian Brandes</dc:creator>
-<pubDate>Sun, 16 Jul 2017 13:54:37 +0200</pubDate></item>
-<item><title>
-Contact - How to contact me
-</title><description><![CDATA[
-
-<p>If you want to contact me, please send an email to: <a href="mailto:florian.brandes@gmx.de">florian.brandes@gmx.de</a>.</p>
-
-<p>My GPG key can be found on the current keyservers. </p>
-
-<p>The key ID currently in use is: 7A04C449</p>
-
-<p>My fingerprint is: F6DE 62EB D6BB 31E0 1803  95B8 A7F7 307B 7A04 C449</p>
-
-<p>Attached is my public key for copy and pasting:</p>
-
-<pre><code>-----BEGIN PGP PUBLIC KEY BLOCK-----
-
-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
-33UUCJ6pDCHjWo3Fj5Uqp3nu0g==
-=f3TZ
------END PGP PUBLIC KEY BLOCK-----
-</code></pre>
-
-<p>Regards,</p>
-
-<p>Florian</p>
-
-<p>Tags: <a href='tag_contact.html'>contact</a>, <a href='tag_email.html'>email</a>, <a href='tag_about.html'>about</a></p>
-
-
-
-
-<!-- text end -->
-]]></description><link>https://gador.github.io/contact---how-to-contact-me.html</link>
-<guid>https://gador.github.io/./contact---how-to-contact-me.html</guid>
-<dc:creator>Florian Brandes</dc:creator>
-<pubDate>Sun, 16 Jul 2017 13:08:00 +0200</pubDate></item>
-</channel></rss>
+</div>
+<div id="footer">CC by-nc-nd <a href="">Florian Brandes</a> &mdash; <a href="mailto:florian&#46;brandes&#64;gmx&#46;de">florian&#46;brandes&#64;gmx&#46;de</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>
