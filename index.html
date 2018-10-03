@@ -14,6 +14,110 @@
 <div id="description">A blog about all kinds of things concerning software and Linux</div>
 </div></div></div>
 <div id="divbody"><div class="content">
+<h3><a class="ablack" href="create-a-vpn-over-an-ipv6-ds-lite-dsl-line.html">
+Create a VPN over an IPv6 DS-LITE DSL line
+</a></h3>
+<!-- bashblog_timestamp: #201810032338.00# -->
+<div class="subtitle">October 03, 2018 &mdash; 
+Florian Brandes
+</div>
+<!-- text begin -->
+
+<p>I recently moved to a new apartment and switched from a cable line back to a DSL line. For years I have used different versions of <a href="https://en.avm.de/products/fritzbox/">Fritz Box</a>, a router from AVM.</p>
+
+<h4>My setting so far consists of:</h4>
+
+<p><code>Raspberry PI &lt;--&gt; Fritz Box &lt;--&gt; Public network</code> <br />
+<code>Local IPv4   &lt;--&gt; Fritz Box &lt;--&gt; Public IPv4</code> <br />
+<code>Local net    &lt;--&gt;    VPN    &lt;--&gt; Public network</code>  </p>
+
+<p>I had an external, public IPv4 address which was mapped by <a href="https://www.noip.com">a dynamic DNS service</a>, so I could access the VPN server running on my Fritz Box. </p>
+
+<p>Unfortunately that setup <a href="https://en.avm.de/service/fritzbox/fritzbox-7430/knowledge-base/publication/show/1497_Can-MyFRITZ-be-used-on-an-internet-connection-with-IPv6-DS-Lite/">doesn't work</a> anymore. Theoretically it would work, if the public network uses an IPv6 address range. Most public WiFi's still use IPv4, so no connection can be established from there. 
+I find it especially annoying that to that date the 3G/4G data networks from Vodafone and O2 <a href="https://www.heise.de/newsticker/meldung/Vodafone-IPv6-im-Mobilfunknetz-kommt-aber-nicht-im-August-4119195.html">do not use the IPv6 (GER)</a> network. </p>
+
+<p><em>So I could not access my home server.</em></p>
+
+<p><code>Raspberry PI &lt;--&gt; Fritz Box &lt;--&gt; Public network</code> <br />
+<code>Local IPv4   &lt;--&gt; Fritz Box &lt;--&gt; Public IPv6</code> <br />
+<code>Local net    &lt;--&gt;    VPN    &lt;-!&gt; Public network</code>  </p>
+
+<h4>My setup now</h4>
+
+<p><code>
+Raspberry PI &lt;--&gt;   Fritz Box   &lt;--&gt; Public network <br />
+Local IPv4   &lt;--&gt;   Fritz Box   &lt;--&gt; Public IPv6 <br />
+Local net    &lt;--&gt;   wireguard   &lt;--&gt; streisand server
+</code> <br />
+And: <br />
+<code>
+Laptop       &lt;--&gt; Public network &lt;--&gt; streisand server
+</code></p>
+
+<p>Wireguard? <a href="https://www.wireguard.com/">Wireguard!</a></p>
+
+<p>To quote their website: </p>
+
+<blockquote>
+  <p>WireGuard® is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPSec, while avoiding the massive headache.</p>
+</blockquote>
+
+<p>It offers the possibility for clients to talk to each other. </p>
+
+<p>For some time now I use a <a href="https://github.com/StreisandEffect/streisand">streisand VPN</a>. It set ups several connection endpoints, one of them is a wireguard server. Streisand offers the possibility to create several profiles. </p>
+
+<p>I now connect from the Raspberry PI to the wireguard server.
+On my laptop I also connect to the wireguard server. </p>
+
+<p>Now I can connect to the Raspberry PI from the laptop.</p>
+
+<h4>setting up a streisand VPN</h4>
+
+<p>Please follow the official instructions for the installation. You'll need a public server (like an Amazon EC2). Streisand automatically set's uo the whole server. After the installation you'll get instructions to open the VPN site, log in and download profiles.</p>
+
+<h4>setting up the wireguard client on the Raspberry</h4>
+
+<ol>
+<li><p>Install the Rapsberry PI headers (necessary for the DKMS module)</p>
+
+<p><code>sudo apt-get install raspberrypi-kernel-headers</code></p></li>
+<li><p>Follow the instructions from the <a href="https://www.wireguard.com/install/">official site</a></p></li>
+<li>Download the profile for the wireguard client from the streisand VPN site</li>
+<li>Follow the installation instructions for the profile from the streisand VPN site. You don't need to change the defaults.</li>
+</ol>
+
+<h4>setting up the wireguard client on your laptop (or other endpoint)</h4>
+
+<p>Follow the official instructions, depending on your distribution/OS.</p>
+
+<p><em>make sure to choose another profile for the wireguard client!</em></p>
+
+<h4>test your setup</h4>
+
+<ol>
+<li><p>Start the wireguard connection from the Raspberry to the streisand/wireguard server</p>
+
+<p><code>sudo wg-quick up wg0-client</code></p></li>
+<li><p>Start the wireguard connection from your laptop to the streisand/wireguard server</p>
+
+<p><code>sudo wg-quick up wg0-client</code></p></li>
+<li><p>connect to your server:</p>
+
+<p><code>ssh pi@LocalWireguardIp</code></p>
+
+<p><em>Your LocalWireguardIp is written down in your downloaded profile</em></p></li>
+</ol>
+
+<h4>conclusion</h4>
+
+<p>I could have bought an IPv4 option with my ISP and circumventing all of those problems. Maybe there is even a workaround for an IPv4->IPv6 tunnel to connect to the FritzBox VPN server. </p>
+
+<p>Since I already had a running streisand I tried the above approach. </p>
+
+<p>If you have remarks or questions I'll be happy to read your mail! </p>
+
+<p>Tags: <a href='tag_vpn.html'>vpn</a>, <a href='tag_ipv6.html'>ipv6</a>, <a href='tag_fritzbox.html'>fritzbox</a>, <a href='tag_ds-lite.html'>ds-lite</a>, <a href='tag_wireguard.html'>wireguard</a>, <a href='tag_streisand.html'>streisand</a></p>
+<!-- text end -->
 <h3><a class="ablack" href="contact---update17621.html">
 Contact - Update
 </a></h3>
